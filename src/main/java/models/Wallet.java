@@ -14,8 +14,13 @@ public class Wallet {
 
     public int getTotalAmount() {
         int sum = 0;
-        for (Transaction transaction : this.transactionList)
-            sum += transaction.getAmount();
+        for (Transaction transaction : this.transactionList) {
+            if (transaction.getType() == Transaction.Type.Credit)
+                sum += transaction.getAmount();
+            else
+                sum = sum - transaction.getAmount();
+
+        }
 
         return sum;
 

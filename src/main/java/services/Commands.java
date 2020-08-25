@@ -1,7 +1,12 @@
 package services;
-
+import System.DigitalWalletSystem;
 import models.Result;
 
-public interface Commands {
-    Result excCommand();
+public abstract class Commands {
+
+    public abstract Result execCommand(String[] commands);
+
+    public DigitalWalletSystem digitalWalletSystem=new DigitalWalletSystem();
+
+
 }

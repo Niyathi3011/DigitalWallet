@@ -1,16 +1,25 @@
 package System;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import models.Wallet;
 
 import java.util.HashMap;
 
-@Getter
-@AllArgsConstructor
 public final class DigitalWalletSystem {
-    private final double MIN_AMOUNT = 0.00001;
-    private final HashMap<Integer, Wallet> walletList = null;
+    private final double MIN_AMOUNT;
+    private final HashMap<Integer, Wallet> walletList;
+
+    public double getMIN_AMOUNT() {
+        return MIN_AMOUNT;
+    }
+
+    public HashMap<Integer, Wallet> getWalletList() {
+        return walletList;
+    }
+
+    public DigitalWalletSystem() {
+        this.MIN_AMOUNT=0.00001;
+        this.walletList=new HashMap<>();
+    }
 
 
 }
