@@ -12,8 +12,8 @@ public class CommandFactory {
                 return new Statement();
             case "TransferMoney":
                 return new TransferMoney();
-            case "Offer1":return new Offer1();
-            case "Offer2":return new Offer2();
+            case "Offer2":
+                return new Offer2();
         }
         return null;
     }

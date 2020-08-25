@@ -17,8 +17,8 @@ public final class DigitalWalletSystem {
     }
 
     public DigitalWalletSystem() {
-        this.MIN_AMOUNT=0.00001;
-        this.walletList=new HashMap<>();
+        this.MIN_AMOUNT = 0.0001;
+        this.walletList = new HashMap<>();
     }
 
 
