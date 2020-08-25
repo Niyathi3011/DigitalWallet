@@ -13,7 +13,7 @@ public class Overview extends Commands {
             System.out.println("Wrong number of fields");
             return null;
         }
-
+        System.out.println("Overview Running");
         for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
             System.out.println(wallet.getName() + wallet.getTotalAmount());
         }

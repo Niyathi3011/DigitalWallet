@@ -33,11 +33,12 @@ public class CreateWallet extends Commands {
         for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
             if (wallet.getName().equalsIgnoreCase(accountHolder)) {
                 wallet.getTransactionList().add(transaction);
-            } else {
-                digitalWalletSystem.getWalletList().put(size, new Wallet(accountHolder, new ArrayList<>()));
-                digitalWalletSystem.getWalletList().get(size).getTransactionList().add(transaction);
+                return null;
             }
         }
+        digitalWalletSystem.getWalletList().put(size, new Wallet(accountHolder, new ArrayList<>()));
+        digitalWalletSystem.getWalletList().get(size).getTransactionList().add(transaction);
+
         size++;
         return null;
     }
