@@ -1,3 +1,3 @@
 public enum Command {
-    CreateWallet, Overview, Statement, TransferMoney, Offer
+    CREATE_WALLET, OVERVIEW, STATEMENT, TRANSFER_MONEY, OFFER
 }

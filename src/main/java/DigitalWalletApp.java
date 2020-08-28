@@ -1,7 +1,7 @@
 import System.DigitalWalletSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import services.Commands;
+import services.Service;
 
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class DigitalWalletApp {
 
         logger.info("Digital Wallet System is instantiated");
         DigitalWalletSystem digitalWalletSystem = new DigitalWalletSystem();
-
+        CommandFactory commandFactory=new CommandFactory(digitalWalletSystem);
         Scanner sc = new Scanner(System.in);
 
         String s = "Yes";
@@ -27,9 +27,9 @@ public class DigitalWalletApp {
             command = sc.nextLine();
             String[] data = command.split(" ");
             logger.info("Getting the instance of a particular Command");
-            Commands c = CommandFactory.getCommands(Command.valueOf(data[0]));
-            if (c != null) {
-                c.execCommand(data, digitalWalletSystem);
+            Service service = commandFactory.getCommands(Command.valueOf(data[0]));
+            if (service != null) {
+                service.executeCommand(data);
 
             }
             System.out.println("Yes/No");
