@@ -4,6 +4,7 @@ import System.DigitalWalletSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static System.DigitalWalletSystem.MIN_AMOUNT;
 import static java.lang.Integer.parseInt;
 
 public class CreateWallet extends Service {
@@ -20,6 +21,11 @@ public class CreateWallet extends Service {
 
     @Override
     public void executeCommand(String[] commandArgs) {
+
+        if(Double.valueOf(commandArgs[AMOUNT_OFFSET])<MIN_AMOUNT) {
+            System.out.println("Account cannot be created");
+            return;
+        }
 
         logger.info("CreateWallet Command is executed");
         getDigitalWalletSystem().createWallet(commandArgs[ACCOUNT_NAME_OFFSET], parseInt(commandArgs[AMOUNT_OFFSET]));
