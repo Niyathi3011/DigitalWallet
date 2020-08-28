@@ -1,59 +1,39 @@
 package services;
 
-import models.Result;
+import System.DigitalWalletSystem;
 import models.Transaction;
 import models.Wallet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static java.lang.Integer.parseInt;
 
 public class TransferMoney extends Commands {
 
-    private final int NUMBER_OF_FIELDS = 4;
+    //private final int NUMBER_OF_FIELDS = 4;
+    private static Logger logger = LoggerFactory.getLogger("TransferMoney.class");
+    private static final int accountHolder1 = 1;
+    private static final int accountHolder2 = 2;
+    private static final int offsetAmount = 3;
 
     @Override
-    public Result execCommand(String[] commands) {
+    public void execCommand(String[] commands, DigitalWalletSystem digitalWalletSystem) {
 
-        if (commands.length != NUMBER_OF_FIELDS) {
-            System.out.println("Wrong number of fields");
-            return null;
-        }
+        logger.info("TransferMoney class is executed");
+        Transaction debited = new Transaction(commands[accountHolder2], Transaction.Type.Debit, parseInt(commands[offsetAmount]));
+        Transaction credited = new Transaction(commands[accountHolder1], Transaction.Type.Credit, parseInt(commands[offsetAmount]));
 
-        String accountHolder1 = commands[1];
-        String accountHolder2 = commands[2];
-        int amount = Integer.valueOf(commands[3]);
+        Wallet wallet = digitalWalletSystem.getWalletList().get(commands[accountHolder1]);
 
-        Transaction transaction = new Transaction(accountHolder2, Transaction.Type.Debit, amount);
-        Transaction transaction1 = new Transaction(accountHolder1, Transaction.Type.Credit, amount);
-
-        for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-            if (wallet.getName().equalsIgnoreCase(accountHolder1))
-                wallet.getTransactionList().add(transaction);
-            else if (wallet.getName().equalsIgnoreCase(accountHolder2))
-                wallet.getTransactionList().add(transaction1);
-        }
-
-        checkForOffer1(accountHolder1, accountHolder2);
-        return null;
-    }
-
-    public void checkForOffer1(String accountHolder1, String accountHolder2) {
-
-        int sum1 = 0, sum2 = 0;
-        Transaction transaction = new Transaction("offer1", Transaction.Type.Credit, 10);
-        for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-            if (wallet.getName().equalsIgnoreCase(accountHolder1))
-                sum1 = wallet.getTotalAmount();
-            else if (wallet.getName().equalsIgnoreCase(accountHolder2))
-                sum2 = wallet.getTotalAmount();
-        }
-
-        if (sum1 == sum2) {
-            for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-                if (wallet.getName().equalsIgnoreCase(accountHolder1))
-                    wallet.getTransactionList().add(transaction);
-                else if (wallet.getName().equalsIgnoreCase(accountHolder2))
-                    wallet.getTransactionList().add(transaction);
-            }
-
+        wallet.getTransactionList().add(debited);
+        Wallet wallet1 = digitalWalletSystem.getWalletList().get(commands[accountHolder2]);
+        if (wallet1 != null)
+            wallet1.getTransactionList().add(credited);
+        else {
+            digitalWalletSystem.getWalletList().put(commands[accountHolder2], new Wallet());
+            digitalWalletSystem.getWalletList().get(commands[accountHolder2]).getTransactionList().add(credited);
         }
 
     }
 }
+

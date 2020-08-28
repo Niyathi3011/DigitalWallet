@@ -1,32 +1,29 @@
 package services;
 
-import models.Result;
+import System.DigitalWalletSystem;
 import models.Transaction;
 import models.Wallet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Statement extends Commands {
 
-    private final int NUMBER_OF_FIELDS = 2;
+    private static Logger logger = LoggerFactory.getLogger(Statement.class);
+
+    // private final int NUMBER_OF_FIELDS = 2;
+    private static final int accountHolder = 1;
 
     @Override
-    public Result execCommand(String[] commands) {
+    public void execCommand(String[] commands, DigitalWalletSystem digitalWalletSystem) {
 
-        if (commands.length != NUMBER_OF_FIELDS) {
-            System.out.println("Input has wrong number of fields");
-            return null;
-        }
+        logger.info("Command Statement is executed");
 
-        String accountHolder = commands[1];
-
-        for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-            if (wallet.getName().equalsIgnoreCase(accountHolder)) {
-                for (Transaction transaction : wallet.getTransactionList()) {
-                    if (!transaction.getName().equalsIgnoreCase(accountHolder)) {
-                        System.out.println(transaction.getName() + transaction.getType() + transaction.getAmount());
-                    }
-                }
+        Wallet wallet = digitalWalletSystem.getWalletList().get(commands[accountHolder]);
+        for (Transaction transaction : wallet.getTransactionList()) {
+            if (!transaction.getName().equalsIgnoreCase(commands[accountHolder])) {
+                System.out.println(transaction.getName() + " " + transaction.getType() + " " + transaction.getAmount());
             }
         }
-        return null;
+
     }
 }

@@ -1,47 +1,29 @@
 package services;
 
-import models.Result;
+import System.DigitalWalletSystem;
 import models.Transaction;
 import models.Wallet;
-
-import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static java.lang.Integer.parseInt;
 
 public class CreateWallet extends Commands {
 
-    private final int NUMBER_OF_FIELDS = 3;
+    private static final Logger logger = LoggerFactory.getLogger(CreateWallet.class);
+
+    //private final int NUMBER_OF_FIELDS = 3;
+    private static final int accountName = 1;
+    private static final int amountOffset = 2;
 
     @Override
-    public Result execCommand(String[] commands) {
+    public void execCommand(String[] commands, DigitalWalletSystem digitalWalletSystem) {
 
-        if (commands.length != NUMBER_OF_FIELDS) {
-            System.out.println("Wrong input");
-            return null;
-        }
+        logger.info("CreateWallet Command is executed");
+        Transaction transaction = new Transaction(commands[accountName], Transaction.Type.Credit, parseInt(commands[amountOffset]));
+        digitalWalletSystem.getWalletList().put(commands[accountName], new Wallet());
+        digitalWalletSystem.getWalletList().get(commands[accountName]).getTransactionList().add(transaction);
 
-        String accountHolder = commands[1];
-        int amount = parseInt(commands[2]);
-
-        if (amount < digitalWalletSystem.getMIN_AMOUNT()) {
-            System.out.println("Amount less than required");
-            return null;
-        }
-
-        Transaction transaction = new Transaction(accountHolder, Transaction.Type.Credit, amount);
-
-        for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-            if (wallet.getName().equalsIgnoreCase(accountHolder)) {
-                wallet.getTransactionList().add(transaction);
-                return null;
-            }
-        }
-        digitalWalletSystem.getWalletList().put(size, new Wallet(accountHolder, new ArrayList<>()));
-        digitalWalletSystem.getWalletList().get(size).getTransactionList().add(transaction);
-
-        size++;
-        return null;
     }
-
 }
 

@@ -1,29 +1,34 @@
 package models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@AllArgsConstructor
 public class Wallet {
 
-    private final String name;
     private final List<Transaction> transactionList;
+    private int amount;
 
-    public int getTotalAmount() {
-        int sum = 0;
-        for (Transaction transaction : this.transactionList) {
+    public List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+
+    public Wallet() {
+        this.transactionList = new ArrayList<>();
+    }
+
+    public int getAmount() {
+
+        amount = 0;
+        for (Transaction transaction : transactionList) {
             if (transaction.getType() == Transaction.Type.Credit)
-                sum += transaction.getAmount();
+                amount += transaction.getAmount();
             else
-                sum = sum - transaction.getAmount();
+                amount -= transaction.getAmount();
 
         }
-
-        return sum;
-
+        return amount;
     }
 
 }

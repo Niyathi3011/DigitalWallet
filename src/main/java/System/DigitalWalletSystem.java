@@ -4,22 +4,16 @@ import models.Wallet;
 
 import java.util.HashMap;
 
-public final class DigitalWalletSystem {
-    private final double MIN_AMOUNT;
-    private final HashMap<Integer, Wallet> walletList;
+public class DigitalWalletSystem {
 
-    public double getMIN_AMOUNT() {
-        return MIN_AMOUNT;
-    }
-
-    public HashMap<Integer, Wallet> getWalletList() {
-        return walletList;
-    }
+    private static final double MIN_AMOUNT = 0.0001;
+    private final HashMap<String, Wallet> walletList;
 
     public DigitalWalletSystem() {
-        this.MIN_AMOUNT = 0.0001;
         this.walletList = new HashMap<>();
     }
 
-
+    public HashMap<String, Wallet> getWalletList() {
+        return walletList;
+    }
 }

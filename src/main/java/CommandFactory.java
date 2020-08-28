@@ -2,18 +2,18 @@ import services.*;
 
 public class CommandFactory {
 
-    public static Commands getCommands(String command) {
+    public static Commands getCommands(Command command) {
         switch (command) {
-            case "CreateWallet":
+            case CreateWallet:
                 return new CreateWallet();
-            case "Overview":
+            case Overview:
                 return new Overview();
-            case "Statement":
+            case Statement:
                 return new Statement();
-            case "TransferMoney":
+            case TransferMoney:
                 return new TransferMoney();
-            case "Offer2":
-                return new Offer2();
+            case Offer:
+                return new Offer();
         }
         return null;
     }

@@ -1,25 +1,26 @@
 package services;
 
-import models.Result;
+import System.DigitalWalletSystem;
 import models.Wallet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 public class Overview extends Commands {
+    private static Logger logger = LoggerFactory.getLogger("Overview.class");
+
     private final int NUMBER_OF_FIELDS = 1;
 
+
     @Override
-    public Result execCommand(String[] commands) {
+    public void execCommand(String[] commands, DigitalWalletSystem digitalWalletSystem) {
 
-        if (commands.length != NUMBER_OF_FIELDS) {
-            System.out.println("Wrong number of fields");
-            return null;
-        }
-        System.out.println("Overview Running");
-        for (Wallet wallet : digitalWalletSystem.getWalletList().values()) {
-            System.out.println(wallet.getName() + wallet.getTotalAmount());
+        logger.info("Command Overview is executed");
+
+        for (Map.Entry<String, Wallet> entry : digitalWalletSystem.getWalletList().entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue().getAmount());
         }
 
-        return null;
     }
-
-
 }
