@@ -1,0 +1,3 @@
+public enum Command {
+    CREATE_WALLET, OVERVIEW, STATEMENT, TRANSFER_MONEY, OFFER
+}
